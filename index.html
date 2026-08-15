@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MUBAZ.IN — Premium T-Shirts</title>
+<link rel="icon" type="image/jpeg" href="assets/brand/mubaz-logo.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0b0b0d;
+    --paper:#f7f5f2;
+    --white:#ffffff;
+    --purple:#3c1a5b;
+    --purple-bright:#7b3fe4;
+    --grey:#6b6b70;
+    --grey-light:#a7a5a0;
+    --line:#e6e2da;
+    --danger:#c0392b;
+    --radius:14px;
+    --radius-sm:8px;
+    --maxw:1280px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:'Inter',sans-serif;
+    color:var(--ink);
+    background:var(--paper);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  img{max-width:100%;display:block;}
+  a{text-decoration:none;color:inherit;}
+  button{font-family:inherit;cursor:pointer;border:none;background:none;}
+  .display{font-family:'Anton',sans-serif; letter-spacing:0.02em;}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 24px;}
+  .eyebrow{
+    font-size:12px; letter-spacing:0.18em; text-transform:uppercase;
+    color:var(--purple); font-weight:700; margin-bottom:10px; display:block;
+  }
+  .section-title{
+    font-size:clamp(28px,4vw,46px);
+    line-height:1.05;
+    margin:0 0 8px 0;
+    text-transform:uppercase;
+  }
+  .section-sub{ color:var(--grey); font-size:15px; margin:0 0 36px 0;}
+  .section{ padding:72px 0; }
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    padding:14px 28px; border-radius:999px; font-weight:700; font-size:13px;
+    letter-spacing:0.06em; text-transform:uppercase; transition:transform .25s ease, background .25s ease, color .25s ease;
+    cursor:pointer; white-space:nowrap;
+  }
+  .btn-primary{ background:var(--ink); color:var(--white); }
+  .btn-primary:hover{ background:var(--purple-bright); transform:translateY(-2px); }
+  .btn-outline{ background:transparent; color:var(--ink); border:1.5px solid var(--ink); }
+  .btn-outline:hover{ background:var(--ink); color:var(--white); transform:translateY(-2px); }
+  .btn-ghost-white{ background:rgba(255,255,255,0.12); color:#fff; border:1.5px solid rgba(255,255,255,0.65); backdrop-filter:blur(6px); }
+  .btn-ghost-white:hover{ background:#fff; color:var(--ink); }
+  .btn:disabled{ opacity:0.45; cursor:not-allowed; transform:none !important; }
+
+  /* ---------------- NAVBAR ---------------- */
+  header#site-header{
+    position:sticky; top:0; z-index:500; background:rgba(247,245,242,0.92);
+    backdrop-filter:blur(10px); border-bottom:1px solid var(--line);
+  }
+  .nav-inner{ display:flex; align-items:center; justify-content:space-between; height:74px; }
+  .wordmark{ font-family:'Anton',sans-serif; font-size:24px; letter-spacing:0.03em; display:flex; align-items:center; gap:2px;}
+  .wordmark .dot{ color:var(--purple-bright); }
+  .logo-badge{ display:flex; align-items:center; gap:10px; }
+  .logo-badge img{ width:46px; height:46px; border-radius:11px; object-fit:cover; display:block; box-shadow:0 4px 14px -4px rgba(60,26,91,0.55); }
+  .logo-badge .logo-text{ display:flex; flex-direction:column; line-height:1; }
+  .logo-badge .logo-text .lt-name{ font-family:'Anton',sans-serif; font-size:17px; letter-spacing:0.02em; }
+  .logo-badge .logo-text .lt-tag{ font-size:8.5px; letter-spacing:0.14em; text-transform:uppercase; color:var(--grey); margin-top:3px; }
+  @media(max-width:420px){ .logo-badge .logo-text{ display:none; } }
+  .footer-logo img{ width:76px; height:76px; border-radius:16px; object-fit:cover; margin-bottom:16px; box-shadow:0 8px 24px -6px rgba(0,0,0,0.5); }
+  .mobile-logo img{ width:52px; height:52px; border-radius:12px; object-fit:cover; }
+  .nav-links{ display:flex; gap:34px; list-style:none; margin:0; padding:0;}
+  .nav-links a{ font-size:13px; font-weight:600; letter-spacing:0.05em; text-transform:uppercase; position:relative; padding:4px 0;}
+  .nav-links a::after{ content:''; position:absolute; left:0; bottom:-2px; width:0; height:2px; background:var(--purple-bright); transition:width .25s ease;}
+  .nav-links a:hover::after{ width:100%; }
+  .nav-actions{ display:flex; align-items:center; gap:20px; }
+  .icon-btn{ display:flex; align-items:center; justify-content:center; width:38px; height:38px; border-radius:50%; position:relative; transition:background .2s ease;}
+  .icon-btn:hover{ background:rgba(0,0,0,0.06); }
+  .cart-count{
+    position:absolute; top:-2px; right:-2px; background:var(--purple-bright); color:#fff; font-size:10px; font-weight:800;
+    width:17px; height:17px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  }
+  .hamburger{ display:none; }
+  @media(max-width:900px){
+    .nav-links{ display:none; }
+    .hamburger{ display:flex; }
+  }
+
+  /* ---------------- MOBILE MENU ---------------- */
+  #mobile-menu{
+    position:fixed; inset:0; background:var(--ink); color:#fff; z-index:900;
+    transform:translateX(-100%); transition:transform .35s ease; padding:24px;
+  }
+  #mobile-menu.open{ transform:translateX(0); }
+  #mobile-menu .close-btn{ color:#fff; font-size:28px; margin-bottom:30px; }
+  #mobile-menu ul{ list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:26px;}
+  #mobile-menu a{ font-family:'Anton',sans-serif; font-size:28px; text-transform:uppercase; }
+
+  /* ---------------- HERO ---------------- */
+  .hero{ position:relative; height:88vh; min-height:560px; overflow:hidden; background:var(--ink); }
+  .hero-slide{
+    position:absolute; inset:0; opacity:0; transition:opacity 1s ease; display:flex; align-items:center;
+  }
+  .hero-slide.active{ opacity:1; }
+  .hero-slide .bg-img{
+    position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 15%;
+    filter:brightness(0.55) saturate(1.05);
+  }
+  .hero-content{ position:relative; z-index:2; color:#fff; padding:0 24px; max-width:var(--maxw); margin:0 auto; width:100%;}
+  .hero-eyebrow{ font-size:13px; letter-spacing:0.3em; text-transform:uppercase; color:var(--grey-light); margin-bottom:18px; display:block; font-weight:600;}
+  .hero-heading{ font-size:clamp(46px,9vw,110px); line-height:0.95; margin:0; text-transform:uppercase; }
+  .hero-tagline{ font-size:clamp(16px,2vw,22px); margin:18px 0 32px; max-width:480px; color:#eee; font-weight:500;}
+  .hero-ctas{ display:flex; gap:16px; flex-wrap:wrap; }
+  .hero-dots{ position:absolute; bottom:28px; left:0; right:0; display:flex; justify-content:center; gap:10px; z-index:3;}
+  .hero-dot{ width:34px; height:3px; background:rgba(255,255,255,0.35); border-radius:2px; cursor:pointer; transition:background .3s ease;}
+  .hero-dot.active{ background:#fff; }
+  .hero-nav-arrow{
+    position:absolute; top:50%; transform:translateY(-50%); z-index:3; width:44px; height:44px; border-radius:50%;
+    background:rgba(255,255,255,0.14); color:#fff; display:flex; align-items:center; justify-content:center; font-size:18px;
+    backdrop-filter:blur(6px); transition:background .2s ease;
+  }
+  .hero-nav-arrow:hover{ background:rgba(255,255,255,0.3); }
+  .hero-prev{ left:24px; } .hero-next{ right:24px; }
+  @media(max-width:700px){ .hero-nav-arrow{display:none;} }
+
+  /* ---------------- STRIP ---------------- */
+  .marquee-strip{ background:var(--ink); color:#fff; padding:14px 0; overflow:hidden; white-space:nowrap; }
+  .marquee-track{ display:inline-flex; gap:48px; animation:scrollx 22s linear infinite; }
+  .marquee-track span{ font-size:13px; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; }
+  .marquee-track span i{ color:var(--purple-bright); font-style:normal; margin:0 8px;}
+  @keyframes scrollx{ from{transform:translateX(0);} to{transform:translateX(-50%);} }
+
+  /* ---------------- FILTER BAR ---------------- */
+  .filter-bar{ display:flex; flex-wrap:wrap; gap:10px; margin-bottom:36px; }
+  .filter-chip{
+    padding:9px 20px; border-radius:999px; border:1.5px solid var(--line); background:var(--white);
+    font-size:12px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; transition:all .2s ease;
+  }
+  .filter-chip:hover{ border-color:var(--ink); }
+  .filter-chip.active{ background:var(--ink); color:#fff; border-color:var(--ink); }
+  .filter-chip.color-active{ background:var(--purple-bright); border-color:var(--purple-bright); color:#fff;}
+  .filter-groups{ display:flex; flex-direction:column; gap:14px; margin-bottom:8px;}
+  .filter-label{ font-size:11px; font-weight:800; letter-spacing:0.12em; text-transform:uppercase; color:var(--grey); margin-right:6px; align-self:center;}
+  .filter-row{ display:flex; align-items:center; flex-wrap:wrap; gap:10px;}
+
+  /* ---------------- PRODUCT GRID / CARDS ---------------- */
+  .grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:22px; }
+  @media(max-width:1000px){ .grid{ grid-template-columns:repeat(3,1fr);} }
+  @media(max-width:640px){ .grid{ grid-template-columns:repeat(2,1fr); gap:12px;} }
+
+  .p-card{
+    background:var(--white); border-radius:var(--radius); overflow:hidden; border:1px solid var(--line);
+    transition:transform .35s ease, box-shadow .35s ease; display:flex; flex-direction:column;
+  }
+  .p-card:hover{ transform:translateY(-6px); box-shadow:0 22px 40px -18px rgba(0,0,0,0.25); }
+  .p-card .img-wrap{ position:relative; aspect-ratio:3/4; overflow:hidden; background:#f0eee9;}
+  .p-card .img-wrap img{ width:100%; height:100%; object-fit:cover; transition:transform .6s ease; }
+  .p-card:hover .img-wrap img{ transform:scale(1.07); }
+  .badge{
+    position:absolute; top:12px; left:12px; background:var(--ink); color:#fff; font-size:10px; font-weight:800;
+    letter-spacing:0.08em; padding:5px 10px; border-radius:999px; text-transform:uppercase; z-index:2;
+  }
+  .badge.premium{ background:var(--purple-bright); }
+  .p-card .body{ padding:16px 16px 18px; display:flex; flex-direction:column; gap:8px; flex:1;}
+  .p-name{ font-size:14px; font-weight:700; margin:0; line-height:1.3;}
+  .p-colour{ font-size:12px; color:var(--grey); font-weight:600; text-transform:uppercase; letter-spacing:0.03em;}
+  .p-price{ font-size:16px; font-weight:800; margin-top:2px;}
+  .p-sizes{ font-size:11px; color:var(--grey-light); letter-spacing:0.05em; }
+  .p-actions{ display:flex; gap:8px; margin-top:auto; padding-top:10px; }
+  .p-actions button{ flex:1; padding:11px 6px; border-radius:999px; font-size:11px; font-weight:800; letter-spacing:0.04em; text-transform:uppercase;}
+  .p-actions .view-btn{ border:1.5px solid var(--ink); background:transparent;}
+  .p-actions .view-btn:hover{ background:var(--ink); color:#fff;}
+  .p-actions .order-btn{ background:var(--ink); color:#fff;}
+  .p-actions .order-btn:hover{ background:var(--purple-bright);}
+
+  /* swatch */
+  .swatch{ width:15px; height:15px; border-radius:50%; display:inline-block; border:1px solid rgba(0,0,0,0.15); vertical-align:-2px; margin-right:6px;}
+
+  /* ---------------- MODALS ---------------- */
+  .overlay{
+    position:fixed; inset:0; background:rgba(10,9,12,0.6); backdrop-filter:blur(3px); z-index:1000;
+    display:none; align-items:center; justify-content:center; padding:20px;
+  }
+  .overlay.open{ display:flex; }
+  .modal{
+    background:#fff; border-radius:18px; width:100%; max-width:920px; max-height:90vh; overflow-y:auto;
+    position:relative; animation:pop .3s ease;
+  }
+  @keyframes pop{ from{ opacity:0; transform:scale(0.96) translateY(10px);} to{opacity:1; transform:scale(1) translateY(0);} }
+  .modal-close{
+    position:absolute; top:16px; right:16px; width:36px; height:36px; border-radius:50%; background:var(--paper);
+    display:flex; align-items:center; justify-content:center; font-size:18px; z-index:5;
+  }
+  .modal-close:hover{ background:var(--line); }
+  .modal-grid{ display:grid; grid-template-columns:1fr 1fr; }
+  @media(max-width:720px){ .modal-grid{ grid-template-columns:1fr; } }
+  .modal-img{ background:#f0eee9; aspect-ratio:3/4; }
+  .modal-img img{ width:100%; height:100%; object-fit:contain; }
+  .modal-body{ padding:32px; display:flex; flex-direction:column; gap:16px;}
+  .modal-body h3{ font-size:24px; margin:0; text-transform:uppercase; font-family:'Anton',sans-serif;}
+  .modal-price{ font-size:22px; font-weight:800; }
+  .selector-label{ font-size:11px; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; color:var(--grey); margin-bottom:8px;}
+  .size-grid{ display:flex; flex-wrap:wrap; gap:8px;}
+  .size-opt{
+    width:44px; height:40px; border:1.5px solid var(--line); border-radius:8px; font-size:12px; font-weight:700;
+    display:flex; align-items:center; justify-content:center; transition:all .18s ease; background:#fff;
+  }
+  .size-opt:hover{ border-color:var(--ink); }
+  .size-opt.active{ background:var(--ink); color:#fff; border-color:var(--ink); }
+  .qty-row{ display:flex; align-items:center; gap:14px; }
+  .qty-control{ display:flex; align-items:center; border:1.5px solid var(--line); border-radius:999px; overflow:hidden;}
+  .qty-control button{ width:38px; height:38px; font-size:18px; font-weight:700; }
+  .qty-control button:hover{ background:var(--paper); }
+  .qty-control span{ width:36px; text-align:center; font-weight:700; }
+  .size-error{ color:var(--danger); font-size:12px; font-weight:700; display:none; }
+  .modal-desc{ font-size:14px; color:var(--grey); line-height:1.6; }
+
+  /* order form */
+  .form-field{ display:flex; flex-direction:column; gap:6px; }
+  .form-field label{ font-size:11px; font-weight:800; letter-spacing:0.08em; text-transform:uppercase; color:var(--grey);}
+  .form-field input, .form-field textarea{
+    border:1.5px solid var(--line); border-radius:10px; padding:12px 14px; font-family:inherit; font-size:14px; background:#fff;
+  }
+  .form-field input:focus, .form-field textarea:focus{ outline:none; border-color:var(--purple-bright); }
+  .order-summary{ background:var(--paper); border-radius:12px; padding:16px; font-size:13px; display:flex; flex-direction:column; gap:6px;}
+  .order-summary .total{ font-weight:800; font-size:16px; border-top:1px solid var(--line); padding-top:8px; margin-top:4px;}
+  .success-screen{ text-align:center; padding:50px 30px; }
+  .success-icon{
+    width:70px; height:70px; border-radius:50%; background:#e9f9ee; color:#1a9d4e; font-size:32px;
+    display:flex; align-items:center; justify-content:center; margin:0 auto 20px;
+  }
+
+  /* ---------------- PROGRESS FLAME PRODUCT PAGE ---------------- */
+  .product-page{ display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:flex-start; }
+  @media(max-width:900px){ .product-page{ grid-template-columns:1fr; gap:28px;} }
+  .gallery-main{ position:relative; aspect-ratio:3/4; background:#f0eee9; border-radius:var(--radius); overflow:hidden; }
+  .gallery-main img{ width:100%; height:100%; object-fit:contain; transition:opacity .3s ease; }
+  .gallery-counter{
+    position:absolute; bottom:14px; right:14px; background:rgba(0,0,0,0.65); color:#fff; font-size:11px; font-weight:700;
+    padding:5px 10px; border-radius:999px; display:none;
+  }
+  @media(max-width:900px){ .gallery-counter{ display:block; } }
+  .thumb-row{ display:flex; gap:10px; margin-top:14px; overflow-x:auto; padding-bottom:4px;}
+  .thumb{
+    width:76px; height:96px; flex:0 0 auto; border-radius:8px; overflow:hidden; border:2px solid transparent;
+    background:#f0eee9; cursor:pointer; transition:border-color .2s ease;
+  }
+  .thumb.active{ border-color:var(--ink); }
+  .thumb img{ width:100%; height:100%; object-fit:contain; }
+  .stars{ color:#e0a800; font-size:14px; letter-spacing:2px;}
+  .pf-colour-row{ display:flex; gap:12px; align-items:center; }
+  .colour-swatch-btn{
+    display:flex; flex-direction:column; align-items:center; gap:6px; padding:4px; border-radius:10px; border:1.5px solid transparent;
+  }
+  .colour-swatch-btn.active{ border-color:var(--ink); }
+  .colour-swatch-btn .dot{ width:30px; height:30px; border-radius:50%; border:1px solid rgba(0,0,0,0.15);}
+  .colour-swatch-btn span.label{ font-size:10px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:var(--grey);}
+  .delivery-note{ display:flex; align-items:center; gap:8px; font-size:13px; font-weight:600; background:var(--paper); padding:12px 16px; border-radius:10px; }
+  .feature-grid{ display:grid; grid-template-columns:repeat(5,1fr); gap:14px; margin-top:34px; }
+  @media(max-width:800px){ .feature-grid{ grid-template-columns:repeat(2,1fr);} }
+  .feature-item{ background:#fff; border:1px solid var(--line); border-radius:12px; padding:18px 14px; text-align:center; }
+  .feature-item .val{ font-family:'Anton',sans-serif; font-size:17px; }
+  .feature-item .lbl{ font-size:11px; color:var(--grey); margin-top:4px; letter-spacing:0.03em;}
+  .action-row{ display:flex; gap:12px; }
+  .action-row .btn{ flex:1; }
+  .size-guide-link{ font-size:12px; font-weight:800; text-decoration:underline; letter-spacing:0.04em; text-transform:uppercase; color:var(--purple-bright); }
+
+  /* size guide table */
+  table.size-table{ width:100%; border-collapse:collapse; font-size:13px; margin-top:14px;}
+  table.size-table th, table.size-table td{ padding:10px 8px; text-align:center; border-bottom:1px solid var(--line);}
+  table.size-table th{ font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:var(--grey);}
+
+  /* ---------------- WHY / STORY ---------------- */
+  .why-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:20px; }
+  @media(max-width:800px){ .why-grid{ grid-template-columns:1fr 1fr;} }
+  .why-card{ background:#fff; border:1px solid var(--line); border-radius:var(--radius); padding:28px 22px; }
+  .why-card .num{ font-family:'Anton',sans-serif; color:var(--purple-bright); font-size:13px; margin-bottom:14px; display:block;}
+  .why-card h4{ font-size:16px; text-transform:uppercase; margin:0 0 8px; }
+  .why-card p{ font-size:13px; color:var(--grey); margin:0; line-height:1.5; }
+
+  .story{ background:var(--ink); color:#fff; border-radius:24px; padding:60px 40px; text-align:center; }
+  .story h2{ font-size:clamp(26px,4vw,42px); text-transform:uppercase; margin:0 0 18px;}
+  .story p{ max-width:560px; margin:0 auto 28px; color:#cfcdd2; font-size:15px; line-height:1.7;}
+
+  /* ---------------- FOOTER ---------------- */
+  footer{ background:var(--ink); color:#eae8ec; margin-top:0; padding:64px 0 24px; }
+  .footer-grid{ display:grid; grid-template-columns:1.6fr 1fr 1fr 1fr; gap:36px; padding-bottom:40px; border-bottom:1px solid rgba(255,255,255,0.12);}
+  @media(max-width:800px){ .footer-grid{ grid-template-columns:1fr 1fr; } }
+  footer h5{ font-size:12px; letter-spacing:0.1em; text-transform:uppercase; color:#8b8891; margin:0 0 16px;}
+  footer ul{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:10px;}
+  footer a{ font-size:13px; color:#d8d6db; }
+  footer a:hover{ color:#fff; }
+  .footer-bottom{ display:flex; justify-content:space-between; align-items:center; padding-top:22px; font-size:12px; color:#8b8891; flex-wrap:wrap; gap:10px;}
+
+  /* ---------------- CART DRAWER ---------------- */
+  #cart-overlay{ position:fixed; inset:0; background:rgba(10,9,12,0.5); z-index:1100; display:none; }
+  #cart-overlay.open{ display:block; }
+  #cart-drawer{
+    position:fixed; top:0; right:0; height:100%; width:400px; max-width:92vw; background:#fff; z-index:1101;
+    transform:translateX(100%); transition:transform .35s ease; display:flex; flex-direction:column;
+  }
+  #cart-drawer.open{ transform:translateX(0); }
+  .cart-head{ display:flex; justify-content:space-between; align-items:center; padding:22px 22px 16px; border-bottom:1px solid var(--line);}
+  .cart-items{ flex:1; overflow-y:auto; padding:16px 22px; display:flex; flex-direction:column; gap:16px;}
+  .cart-item{ display:flex; gap:12px; }
+  .cart-item img{ width:64px; height:80px; object-fit:cover; border-radius:8px; background:#f0eee9;}
+  .cart-item-info{ flex:1; }
+  .cart-item-info .cn{ font-size:13px; font-weight:700; }
+  .cart-item-info .cm{ font-size:11px; color:var(--grey); margin-top:2px;}
+  .cart-item-info .cp{ font-size:13px; font-weight:800; margin-top:6px;}
+  .cart-remove{ font-size:11px; color:var(--danger); font-weight:700; text-decoration:underline; margin-top:4px;}
+  .cart-empty{ text-align:center; color:var(--grey); font-size:13px; padding:50px 20px;}
+  .cart-foot{ padding:20px 22px; border-top:1px solid var(--line); display:flex; flex-direction:column; gap:12px;}
+  .cart-total-row{ display:flex; justify-content:space-between; font-weight:800; font-size:16px;}
+
+  /* toast */
+  #toast{
+    position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(20px); background:var(--ink); color:#fff;
+    padding:14px 22px; border-radius:999px; font-size:13px; font-weight:600; z-index:1300; opacity:0; transition:all .3s ease; pointer-events:none;
+  }
+  #toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+
+  .visually-hidden{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0);}
+  :focus-visible{ outline:2px solid var(--purple-bright); outline-offset:2px; }
+</style>
+</head>
+<body>
+
+<!-- ================= HEADER ================= -->
+<header id="site-header">
+  <div class="wrap nav-inner">
+    <button class="icon-btn hamburger" onclick="openMobileMenu()" aria-label="Open menu">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+    <a href="#top" class="logo-badge" aria-label="MUBAZ.IN home">
+      <img src="assets/brand/mubaz-logo.jpg" alt="MUBAZ.IN logo">
+      <span class="logo-text"><span class="lt-name">MUBAZ.IN</span><span class="lt-tag">Premium T-Shirts</span></span>
+    </a>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="#top">Home</a></li>
+        <li><a href="#shop-drop">Shop</a></li>
+        <li><a href="#acid-wash">New Arrivals</a></li>
+        <li><a href="#progress-flame">Oversized Tees</a></li>
+        <li><a href="#collection">Collections</a></li>
+        <li><a href="#story">About</a></li>
+      </ul>
+    </nav>
+    <div class="nav-actions">
+      <button class="icon-btn" aria-label="Search">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M21 21l-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <button class="icon-btn" aria-label="Account">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2"/><path d="M4 20c1.5-4 5-6 8-6s6.5 2 8 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <button class="icon-btn" aria-label="Cart" onclick="openCart()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 8h12l-1 12H7L6 8z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9 8V6a3 3 0 016 0v2" stroke="currentColor" stroke-width="2"/></svg>
+        <span class="cart-count" id="cart-count">0</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile Menu -->
+<div id="mobile-menu">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:30px;">
+    <span class="mobile-logo"><img src="assets/brand/mubaz-logo.jpg" alt="MUBAZ.IN logo"></span>
+    <button class="close-btn" onclick="closeMobileMenu()">&times;</button>
+  </div>
+  <ul>
+    <li><a href="#top" onclick="closeMobileMenu()">Home</a></li>
+    <li><a href="#shop-drop" onclick="closeMobileMenu()">Shop</a></li>
+    <li><a href="#acid-wash" onclick="closeMobileMenu()">New Arrivals</a></li>
+    <li><a href="#progress-flame" onclick="closeMobileMenu()">Oversized Tees</a></li>
+    <li><a href="#collection" onclick="closeMobileMenu()">Collections</a></li>
+    <li><a href="#story" onclick="closeMobileMenu()">About</a></li>
+  </ul>
+</div>
+
+<div id="top"></div>
+
+<!-- ================= HERO ================= -->
+<section class="hero" id="hero">
+  <div class="hero-slide active" data-index="0">
+    <img class="bg-img" src="assets/products/progress-flame/progress-flame-black-front.jpg" alt="Progress Flame Oversized T-Shirt in black">
+    <div class="hero-content">
+      <span class="hero-eyebrow">Progress Collection</span>
+      <h1 class="hero-heading display">Built<br>To Rise.</h1>
+      <p class="hero-tagline">The Progress Flame Oversized Tee — 240 GSM french terry, bio-washed, built for movement.</p>
+      <div class="hero-ctas">
+        <a href="#progress-flame" class="btn btn-primary">Shop Now</a>
+        <a href="#collection" class="btn btn-ghost-white">Explore Collection</a>
+      </div>
+    </div>
+  </div>
+  <div class="hero-slide" data-index="1">
+    <img class="bg-img" src="assets/products/progress-flame/progress-flame-red-front.jpg" alt="Progress Flame Oversized T-Shirt in red">
+    <div class="hero-content">
+      <span class="hero-eyebrow">Progress Collection</span>
+      <h1 class="hero-heading display">I Rise<br>Stronger.</h1>
+      <p class="hero-tagline">Bold flame graphics on a relaxed oversized silhouette. Every time, stronger.</p>
+      <div class="hero-ctas">
+        <a href="#progress-flame" class="btn btn-primary">Shop Now</a>
+        <a href="#collection" class="btn btn-ghost-white">Explore Collection</a>
+      </div>
+    </div>
+  </div>
+  <div class="hero-slide" data-index="2">
+    <img class="bg-img" src="assets/products/acid-wash/acid-wash-black.jpg" alt="Black acid wash oversized t-shirt">
+    <div class="hero-content">
+      <span class="hero-eyebrow">Acid Wash Collection</span>
+      <h1 class="hero-heading display">Effortless.<br>Bold. Mubaz.</h1>
+      <p class="hero-tagline">Premium acid wash oversized tees in 7 signature colourways. Starting at ₹599.</p>
+      <div class="hero-ctas">
+        <a href="#acid-wash" class="btn btn-primary">Shop Now</a>
+        <a href="#collection" class="btn btn-ghost-white">Explore Collection</a>
+      </div>
+    </div>
+  </div>
+  <div class="hero-slide" data-index="3">
+    <img class="bg-img" src="assets/products/progress-flame/progress-flame-white-front.jpg" alt="Progress Flame Oversized T-Shirt in white">
+    <div class="hero-content">
+      <span class="hero-eyebrow">Progress Collection</span>
+      <h1 class="hero-heading display">Keep Moving<br>Forward.</h1>
+      <p class="hero-tagline">Clean canvas, loud statement. Oversized comfort meets streetwear attitude.</p>
+      <div class="hero-ctas">
+        <a href="#progress-flame" class="btn btn-primary">Shop Now</a>
+        <a href="#collection" class="btn btn-ghost-white">Explore Collection</a>
+      </div>
+    </div>
+  </div>
+  <button class="hero-nav-arrow hero-prev" onclick="changeSlide(-1)" aria-label="Previous slide">&#8592;</button>
+  <button class="hero-nav-arrow hero-next" onclick="changeSlide(1)" aria-label="Next slide">&#8594;</button>
+  <div class="hero-dots" id="hero-dots"></div>
+</section>
+
+<div class="marquee-strip">
+  <div class="marquee-track">
+    <span>QUALITY <i>&#9670;</i> COMFORT <i>&#9670;</i> STYLE <i>&#9670;</i> FREE-SIZE OVERSIZED FIT <i>&#9670;</i> DELIVERY IN 1&ndash;2 DAYS <i>&#9670;</i> EASY EXCHANGE</span>
+    <span>QUALITY <i>&#9670;</i> COMFORT <i>&#9670;</i> STYLE <i>&#9670;</i> FREE-SIZE OVERSIZED FIT <i>&#9670;</i> DELIVERY IN 1&ndash;2 DAYS <i>&#9670;</i> EASY EXCHANGE</span>
+  </div>
+</div>
+
+<!-- ================= FEATURED COLLECTION ================= -->
+<section class="section" id="collection">
+  <div class="wrap">
+    <span class="eyebrow">MUBAZ.IN Collection</span>
+    <h2 class="section-title display">Made for everyday confidence</h2>
+    <p class="section-sub">Premium oversized T-shirts made for everyday confidence.</p>
+    <div class="grid" id="featured-grid"></div>
+  </div>
+</section>
+
+<!-- ================= SHOP THE DROP ================= -->
+<section class="section" id="shop-drop" style="background:#fff;">
+  <div class="wrap">
+    <span class="eyebrow">Shop The Drop</span>
+    <h2 class="section-title display">Every drop, one place</h2>
+    <div class="filter-bar" id="drop-filters"></div>
+    <div class="grid" id="drop-grid"></div>
+  </div>
+</section>
+
+<!-- ================= ACID WASH COLLECTION ================= -->
+<section class="section" id="acid-wash">
+  <div class="wrap">
+    <span class="eyebrow">New Arrivals</span>
+    <h2 class="section-title display">New Acid Wash Oversized Collection</h2>
+    <p class="section-sub">Premium Quality &bull; Trendy Look &bull; Comfortable Fit &mdash; ₹599</p>
+
+    <div class="filter-groups">
+      <div class="filter-row">
+        <span class="filter-label">Colour</span>
+        <div id="acid-colour-filters" style="display:flex;gap:10px;flex-wrap:wrap;"></div>
+      </div>
+      <div class="filter-row">
+        <span class="filter-label">Size</span>
+        <div id="acid-size-filters" style="display:flex;gap:10px;flex-wrap:wrap;"></div>
+      </div>
+    </div>
+
+    <div class="grid" id="acid-grid" style="margin-top:26px;"></div>
+  </div>
+</section>
+
+<!-- ================= PROGRESS FLAME PRODUCT PAGE ================= -->
+<section class="section" id="progress-flame" style="background:#fff;">
+  <div class="wrap">
+    <span class="eyebrow">Statement Tees</span>
+    <h2 class="section-title display" style="margin-bottom:34px;">Progress Flame Oversized T-Shirt</h2>
+
+    <div class="product-page">
+      <!-- GALLERY -->
+      <div>
+        <div class="gallery-main">
+          <img id="pf-main-img" src="assets/products/progress-flame/progress-flame-black-front.jpg" alt="Progress Flame Oversized T-Shirt">
+          <span class="gallery-counter" id="pf-counter">1 / 2</span>
+        </div>
+        <div class="thumb-row" id="pf-thumbs"></div>
+      </div>
+
+      <!-- INFO -->
+      <div class="modal-body" style="padding:0;">
+        <h3 style="font-size:30px;">Progress Flame Oversized T-Shirt</h3>
+        <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <div class="modal-price">₹599</div>
+        <p class="modal-desc">Premium oversized T-shirt designed for everyday comfort and bold streetwear styling. Made with 240 GSM French Terry fabric and 100% cotton, the bio-washed finish provides a premium feel, while double stitching enhances durability. Available in XS to 3XL.</p>
+
+        <div>
+          <div class="selector-label">Colour: <span id="pf-colour-label">Black</span></div>
+          <div class="pf-colour-row" id="pf-colour-selector"></div>
+        </div>
+
+        <div>
+          <div class="selector-label">Size</div>
+          <div class="size-grid" id="pf-size-grid"></div>
+          <div class="size-error" id="pf-size-error">Please select a size</div>
+          <a class="size-guide-link" style="display:inline-block;margin-top:10px;" onclick="openSizeGuide()">Size Guide</a>
+        </div>
+
+        <div>
+          <div class="selector-label">Quantity</div>
+          <div class="qty-control" style="width:fit-content;">
+            <button onclick="changeQty('pf',-1)">&minus;</button>
+            <span id="pf-qty">1</span>
+            <button onclick="changeQty('pf',1)">+</button>
+          </div>
+        </div>
+
+        <div class="delivery-note">&#128666; Delivery within 1&ndash;2 days.</div>
+
+        <div class="action-row">
+          <button class="btn btn-outline" onclick="addToCart('pf')">Add to Cart</button>
+          <button class="btn btn-primary" onclick="buyNow('pf')">Buy Now</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="feature-grid">
+      <div class="feature-item"><div class="val">240 GSM</div><div class="lbl">French Terry Fabric</div></div>
+      <div class="feature-item"><div class="val">100%</div><div class="lbl">Premium Cotton</div></div>
+      <div class="feature-item"><div class="val">Bio-Washed</div><div class="lbl">Premium Finish</div></div>
+      <div class="feature-item"><div class="val">Durable</div><div class="lbl">Double-Stitched</div></div>
+      <div class="feature-item"><div class="val">Woven Label</div><div class="lbl">Inside Label</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= WHY MUBAZ ================= -->
+<section class="section">
+  <div class="wrap">
+    <span class="eyebrow">Why Mubaz.in</span>
+    <h2 class="section-title display">The details that matter</h2>
+    <div class="why-grid" style="margin-top:30px;">
+      <div class="why-card"><span class="num">01</span><h4>Premium Quality</h4><p>Quality fabrics and construction in every stitch.</p></div>
+      <div class="why-card"><span class="num">02</span><h4>Oversized Comfort</h4><p>Relaxed silhouettes designed for everyday wear.</p></div>
+      <div class="why-card"><span class="num">03</span><h4>Bold Design</h4><p>Minimal graphics with maximum attitude.</p></div>
+      <div class="why-card"><span class="num">04</span><h4>Easy Exchange</h4><p>Simple and convenient exchange process.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= BRAND STORY ================= -->
+<section class="section" id="story">
+  <div class="wrap">
+    <div class="story">
+      <span class="eyebrow" style="color:#b79dfa;">The Mubaz.in Mindset</span>
+      <h2 class="display">Keep Moving Forward</h2>
+      <p>Streetwear built for those who keep moving forward. Premium fabrics, bold graphics and comfortable silhouettes designed for everyday confidence.</p>
+      <a class="btn btn-ghost-white" href="#top">Our Story</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo"><img src="assets/brand/mubaz-logo.jpg" alt="MUBAZ.IN logo"></div>
+        <p style="font-size:13px;color:#b8b5bd;max-width:260px;line-height:1.6;">Premium T-Shirts.<br>Quality &bull; Comfort &bull; Style</p>
+      </div>
+      <div>
+        <h5>Shop</h5>
+        <ul>
+          <li><a href="#shop-drop">All Products</a></li>
+          <li><a href="#acid-wash">New Arrivals</a></li>
+          <li><a href="#progress-flame">Oversized Tees</a></li>
+          <li><a href="#collection">Collections</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Help</h5>
+        <ul>
+          <li><a onclick="openSizeGuide()">Size Guide</a></li>
+          <li><a href="#">Shipping</a></li>
+          <li><a href="#">Returns &amp; Exchange</a></li>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>About</h5>
+        <ul>
+          <li><a href="#story">Our Story</a></li>
+          <li><a href="#top">Mubaz.in</a></li>
+        </ul>
+        <h5 style="margin-top:22px;">Social</h5>
+        <ul>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#" id="footer-whatsapp">WhatsApp</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 MUBAZ.IN. All Rights Reserved.</span>
+      <span>Made for those who keep moving forward.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ================= VIEW PRODUCT MODAL (Acid Wash) ================= -->
+<div class="overlay" id="view-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('view-modal')">&times;</button>
+    <div class="modal-grid">
+      <div class="modal-img"><img id="vm-img" src="" alt=""></div>
+      <div class="modal-body">
+        <span class="badge premium" style="position:static;width:fit-content;">Premium Quality</span>
+        <h3>Acid Wash Oversized T-Shirt</h3>
+        <div class="selector-label">Colour: <span id="vm-colour"></span></div>
+        <div class="modal-price">₹599</div>
+        <p class="modal-desc">Premium quality acid wash oversized T-shirt designed for a trendy streetwear look. Comfortable fit, stylish finish and suitable for everyday casual wear.</p>
+        <div>
+          <div class="selector-label">Size</div>
+          <div class="size-grid" id="vm-size-grid"></div>
+          <div class="size-error" id="vm-size-error">Please select a size</div>
+        </div>
+        <div>
+          <div class="selector-label">Quantity</div>
+          <div class="qty-control" style="width:fit-content;">
+            <button onclick="changeQty('vm',-1)">&minus;</button>
+            <span id="vm-qty">1</span>
+            <button onclick="changeQty('vm',1)">+</button>
+          </div>
+        </div>
+        <div class="action-row">
+          <button class="btn btn-outline" onclick="addToCart('vm')">Add to Cart</button>
+          <button class="btn btn-primary" onclick="openOrderForm('vm')">Order Now</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= ORDER FORM MODAL ================= -->
+<div class="overlay" id="order-modal">
+  <div class="modal" style="max-width:520px;">
+    <button class="modal-close" onclick="closeModal('order-modal')">&times;</button>
+    <div class="modal-body" id="order-form-wrap" style="padding:36px;">
+      <h3>Complete Your Order</h3>
+      <div class="order-summary" id="order-summary"></div>
+      <div class="form-field"><label>Customer Name</label><input type="text" id="of-name" placeholder="Your full name"></div>
+      <div class="form-field"><label>Phone Number</label><input type="tel" id="of-phone" placeholder="10-digit mobile number"></div>
+      <div class="form-field"><label>Delivery Address</label><textarea id="of-address" rows="3" placeholder="Full delivery address with pincode"></textarea></div>
+      <button class="btn btn-primary" style="width:100%;margin-top:6px;" onclick="confirmOrder()">Confirm Order</button>
+      <p style="font-size:11px;color:var(--grey);text-align:center;margin:0;">You can also send this order directly via WhatsApp.</p>
+    </div>
+    <div class="success-screen" id="order-success" style="display:none;">
+      <div class="success-icon">&#10003;</div>
+      <h3 style="margin-bottom:10px;">Order Request Received!</h3>
+      <p style="color:var(--grey);font-size:14px;max-width:340px;margin:0 auto 24px;">Thank you for your order. We will contact you shortly to confirm availability and delivery details.</p>
+      <button class="btn btn-outline" onclick="closeModal('order-modal')">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= SIZE GUIDE MODAL ================= -->
+<div class="overlay" id="size-guide-modal">
+  <div class="modal" style="max-width:600px;">
+    <button class="modal-close" onclick="closeModal('size-guide-modal')">&times;</button>
+    <div class="modal-body" style="padding:36px;">
+      <h3>Size Guide</h3>
+      <p class="modal-desc">All measurements are in inches.</p>
+      <table class="size-table">
+        <thead><tr><th>Size</th><th>Chest</th><th>Shoulder</th><th>Length</th><th>Sleeve</th><th>Sleeve Open</th></tr></thead>
+        <tbody>
+          <tr><td>XS</td><td>39</td><td>19.5</td><td>27</td><td>8</td><td>6.5</td></tr>
+          <tr><td>S</td><td>41</td><td>20.5</td><td>28</td><td>8.5</td><td>7.5</td></tr>
+          <tr><td>M</td><td>43</td><td>21.5</td><td>28.5</td><td>9</td><td>8</td></tr>
+          <tr><td>L</td><td>45</td><td>22.5</td><td>29</td><td>9.5</td><td>8.5</td></tr>
+          <tr><td>XL</td><td>47</td><td>23.5</td><td>29.5</td><td>10</td><td>9</td></tr>
+          <tr><td>XXL</td><td>49</td><td>24.5</td><td>29.5</td><td>10</td><td>9.5</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:12px;color:var(--grey);">For 3XL exact measurements, message us on WhatsApp and we'll confirm before you order.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ================= CART DRAWER ================= -->
+<div id="cart-overlay" onclick="closeCart()"></div>
+<div id="cart-drawer">
+  <div class="cart-head">
+    <h3 style="margin:0;font-family:'Anton',sans-serif;text-transform:uppercase;">Your Cart</h3>
+    <button class="modal-close" style="position:static;" onclick="closeCart()">&times;</button>
+  </div>
+  <div class="cart-items" id="cart-items"></div>
+  <div class="cart-foot">
+    <div class="cart-total-row"><span>Total</span><span id="cart-total">₹0</span></div>
+    <button class="btn btn-primary" style="width:100%;" onclick="checkoutWhatsApp()">Checkout on WhatsApp</button>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+/* =========================================================
+   CONFIG
+========================================================= */
+// TODO: Replace with the real MUBAZ.IN WhatsApp business number (country code + number, no + or spaces)
+const WHATSAPP_NUMBER = "919999999999";
+
+const SIZES = ["XS","S","M","L","XL","XXL","XXXL"];
+
+const ACID_COLOURS = [
+  { key:"beige",  label:"Beige",         hex:"#e9dfc4", img:"assets/products/acid-wash/acid-wash-beige.jpg" },
+  { key:"maroon", label:"Maroon",        hex:"#6d2430", img:"assets/products/acid-wash/acid-wash-maroon.jpg" },
+  { key:"white",  label:"White",         hex:"#f2f2f0", img:"assets/products/acid-wash/acid-wash-white.jpg" },
+  { key:"brushing", label:"White Brushing", hex:"#e5e5e5", img:"assets/products/acid-wash/acid-wash-white-brushing.jpg" },
+  { key:"black",  label:"Black",         hex:"#1a1a1a", img:"assets/products/acid-wash/acid-wash-black.jpg" },
+  { key:"red",    label:"Red",           hex:"#b7222a", img:"assets/products/acid-wash/acid-wash-red.jpg" },
+  { key:"blue",   label:"Blue",          hex:"#2f5f9e", img:"assets/products/acid-wash/acid-wash-blue.jpg" },
+];
+
+const PF_VARIANTS = {
+  black: { label:"Black", hex:"#1a1a1a", front:"assets/products/progress-flame/progress-flame-black-front.jpg", back:"assets/products/progress-flame/progress-flame-black-back.jpg" },
+  white: { label:"White", hex:"#f2f2f0", front:"assets/products/progress-flame/progress-flame-white-front.jpg", back:"assets/products/progress-flame/progress-flame-white-back.jpg" },
+  red:   { label:"Red",   hex:"#b7222a", front:"assets/products/progress-flame/progress-flame-red-front.jpg",   back:"assets/products/progress-flame/progress-flame-red-back.jpg" },
+};
+
+/* =========================================================
+   STATE
+========================================================= */
+let cart = [];
+let vmState = { colourKey:null, size:null, qty:1 };
+let pfState = { colourKey:"black", size:null, qty:1, imgIndex:0 };
+let pendingOrder = null;
+
+/* =========================================================
+   HELPERS
+========================================================= */
+function fmt(n){ return "₹" + n.toLocaleString("en-IN"); }
+
+function toast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(window._toastTimer);
+  window._toastTimer = setTimeout(()=> t.classList.remove('show'), 2600);
+}
+
+function buildSizeGrid(container, activeSize, onSelect){
+  container.innerHTML = "";
+  SIZES.forEach(sz=>{
+    const b = document.createElement('button');
+    b.className = 'size-opt' + (sz === activeSize ? ' active':'');
+    b.textContent = sz;
+    b.onclick = ()=> onSelect(sz);
+    container.appendChild(b);
+  });
+}
+
+/* =========================================================
+   HERO SLIDESHOW
+========================================================= */
+const slides = document.querySelectorAll('.hero-slide');
+const dotsWrap = document.getElementById('hero-dots');
+let slideIndex = 0;
+slides.forEach((s,i)=>{
+  const d = document.createElement('button');
+  d.className = 'hero-dot' + (i===0?' active':'');
+  d.onclick = ()=> goToSlide(i);
+  dotsWrap.appendChild(d);
+});
+function goToSlide(i){
+  slides[slideIndex].classList.remove('active');
+  dotsWrap.children[slideIndex].classList.remove('active');
+  slideIndex = (i + slides.length) % slides.length;
+  slides[slideIndex].classList.add('active');
+  dotsWrap.children[slideIndex].classList.add('active');
+}
+function changeSlide(dir){ goToSlide(slideIndex + dir); }
+setInterval(()=> changeSlide(1), 5500);
+
+/* =========================================================
+   MOBILE MENU
+========================================================= */
+function openMobileMenu(){ document.getElementById('mobile-menu').classList.add('open'); }
+function closeMobileMenu(){ document.getElementById('mobile-menu').classList.remove('open'); }
+
+/* =========================================================
+   RENDER: ACID WASH GRID
+========================================================= */
+function acidCard(c){
+  return `
+  <div class="p-card" data-colour="${c.key}">
+    <div class="img-wrap">
+      <span class="badge premium">Premium Quality</span>
+      <img src="${c.img}" alt="Acid Wash Oversized T-Shirt in ${c.label}" loading="lazy">
+    </div>
+    <div class="body">
+      <p class="p-name">Acid Wash Oversized T-Shirt</p>
+      <p class="p-colour"><span class="swatch" style="background:${c.hex}"></span>${c.label}</p>
+      <p class="p-price">₹599</p>
+      <p class="p-sizes">XS &bull; S &bull; M &bull; L &bull; XL &bull; XXL &bull; XXXL</p>
+      <div class="p-actions">
+        <button class="view-btn" onclick="openViewModal('${c.key}')">View Product</button>
+        <button class="order-btn" onclick="openViewModal('${c.key}', true)">Order Now</button>
+      </div>
+    </div>
+  </div>`;
+}
+document.getElementById('acid-grid').innerHTML = ACID_COLOURS.map(acidCard).join('');
+
+// colour filters
+const acidColourFilterWrap = document.getElementById('acid-colour-filters');
+let acidActiveColour = 'all';
+function renderAcidColourFilters(){
+  const chips = [{key:'all',label:'All'}, ...ACID_COLOURS.map(c=>({key:c.key,label:c.label}))];
+  acidColourFilterWrap.innerHTML = chips.map(ch=>
+    `<button class="filter-chip ${acidActiveColour===ch.key?'active':''}" onclick="setAcidColourFilter('${ch.key}')">${ch.label}</button>`
+  ).join('');
+}
+function setAcidColourFilter(key){ acidActiveColour = key; renderAcidColourFilters(); applyAcidFilters(); }
+renderAcidColourFilters();
+
+// size filters
+const acidSizeFilterWrap = document.getElementById('acid-size-filters');
+let acidActiveSize = 'all';
+function renderAcidSizeFilters(){
+  const chips = ['all', ...SIZES];
+  acidSizeFilterWrap.innerHTML = chips.map(sz=>
+    `<button class="filter-chip ${acidActiveSize===sz?'active':''}" onclick="setAcidSizeFilter('${sz}')">${sz==='all'?'All':sz}</button>`
+  ).join('');
+}
+function setAcidSizeFilter(sz){ acidActiveSize = sz; renderAcidSizeFilters(); applyAcidFilters(); }
+renderAcidSizeFilters();
+
+function applyAcidFilters(){
+  document.querySelectorAll('#acid-grid .p-card').forEach(card=>{
+    const matchColour = acidActiveColour === 'all' || card.dataset.colour === acidActiveColour;
+    // all sizes are available on every colour, so size filter never excludes a product here,
+    // but kept functional in case stock rules are added later.
+    card.style.display = matchColour ? '' : 'none';
+  });
+}
+
+/* =========================================================
+   RENDER: FEATURED + SHOP THE DROP
+========================================================= */
+const ALL_PRODUCTS = [
+  ...ACID_COLOURS.map(c=>({
+    id:'acid-'+c.key, name:'Acid Wash Oversized T-Shirt', colour:c.label, hex:c.hex,
+    price:599, img:c.img, cat:['oversized','acid-wash'], type:'acid', colourKey:c.key
+  })),
+  { id:'pf-black', name:'Progress Flame Oversized T-Shirt', colour:'Black', hex:'#1a1a1a', price:599, img:PF_VARIANTS.black.front, cat:['oversized','graphic-tees','statement-tees'], type:'pf', colourKey:'black' },
+  { id:'pf-white', name:'Progress Flame Oversized T-Shirt', colour:'White', hex:'#f2f2f0', price:599, img:PF_VARIANTS.white.front, cat:['oversized','graphic-tees','statement-tees'], type:'pf', colourKey:'white' },
+  { id:'pf-red',   name:'Progress Flame Oversized T-Shirt', colour:'Red',   hex:'#b7222a', price:599, img:PF_VARIANTS.red.front,   cat:['oversized','graphic-tees','statement-tees'], type:'pf', colourKey:'red' },
+];
+
+function productCard(p, badge){
+  const action = p.type === 'acid'
+    ? `onclick="openViewModal('${p.colourKey}')"`
+    : `onclick="document.getElementById('progress-flame').scrollIntoView({behavior:'smooth'}); selectPfColour('${p.colourKey}')"`;
+  return `
+  <div class="p-card" data-cat="${p.cat.join(' ')}">
+    <div class="img-wrap">
+      <span class="badge">${badge}</span>
+      <img src="${p.img}" alt="${p.name} in ${p.colour}" loading="lazy">
+    </div>
+    <div class="body">
+      <p class="p-name">${p.name}</p>
+      <p class="p-colour"><span class="swatch" style="background:${p.hex}"></span>${p.colour}</p>
+      <p class="p-price">${fmt(p.price)}</p>
+      <div class="p-actions">
+        <button class="view-btn" ${action}>View Product</button>
+        <button class="order-btn" ${action}>Quick Add</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+document.getElementById('featured-grid').innerHTML = ALL_PRODUCTS.slice(0,4).map(p=>productCard(p,'New Drop')).join('');
+
+const dropGrid = document.getElementById('drop-grid');
+dropGrid.innerHTML = ALL_PRODUCTS.map(p=>productCard(p,'New Drop')).join('');
+
+const DROP_FILTERS = ['All','Oversized','Graphic Tees','Acid Wash','Statement Tees'];
+let dropActive = 'All';
+const dropFilterWrap = document.getElementById('drop-filters');
+function renderDropFilters(){
+  dropFilterWrap.innerHTML = DROP_FILTERS.map(f=>
+    `<button class="filter-chip ${dropActive===f?'active':''}" onclick="setDropFilter('${f}')">${f}</button>`
+  ).join('');
+}
+function setDropFilter(f){
+  dropActive = f; renderDropFilters();
+  const key = f.toLowerCase().replace(' ','-');
+  document.querySelectorAll('#drop-grid .p-card').forEach(card=>{
+    card.style.display = (f==='All' || card.dataset.cat.includes(key)) ? '' : 'none';
+  });
+}
+renderDropFilters();
+
+/* =========================================================
+   VIEW MODAL (Acid Wash)
+========================================================= */
+function openViewModal(colourKey, goStraightToOrder){
+  const c = ACID_COLOURS.find(x=>x.key===colourKey);
+  vmState = { colourKey, size:null, qty:1 };
+  document.getElementById('vm-img').src = c.img;
+  document.getElementById('vm-img').alt = 'Acid Wash Oversized T-Shirt in ' + c.label;
+  document.getElementById('vm-colour').textContent = c.label;
+  document.getElementById('vm-qty').textContent = '1';
+  document.getElementById('vm-size-error').style.display = 'none';
+  renderVmSizes();
+  openModal('view-modal');
+  if(goStraightToOrder){
+    // let user pick size/qty first; Order Now inside modal will validate
+  }
+}
+
+function renderVmSizes(){
+  buildSizeGrid(document.getElementById('vm-size-grid'), vmState.size, (sz)=>{
+    vmState.size = sz;
+    document.getElementById('vm-size-error').style.display = 'none';
+    renderVmSizes();
+  });
+}
+
+/* =========================================================
+   PROGRESS FLAME PRODUCT SECTION
+========================================================= */
+function pfImages(){
+  const v = PF_VARIANTS[pfState.colourKey];
+  return [ {src:v.front,label:'Front'}, {src:v.back,label:'Back'} ];
+}
+function renderPfGallery(){
+  const imgs = pfImages();
+  pfState.imgIndex = Math.min(pfState.imgIndex, imgs.length-1);
+  document.getElementById('pf-main-img').src = imgs[pfState.imgIndex].src;
+  document.getElementById('pf-main-img').alt = 'Progress Flame Oversized T-Shirt - ' + PF_VARIANTS[pfState.colourKey].label + ' ' + imgs[pfState.imgIndex].label;
+  document.getElementById('pf-counter').textContent = (pfState.imgIndex+1) + ' / ' + imgs.length;
+  document.getElementById('pf-thumbs').innerHTML = imgs.map((im,i)=>
+    `<button class="thumb ${i===pfState.imgIndex?'active':''}" onclick="pfState.imgIndex=${i}; renderPfGallery();">
+       <img src="${im.src}" alt="${im.label} view thumbnail">
+     </button>`
+  ).join('');
+}
+function renderPfColourSelector(){
+  const wrap = document.getElementById('pf-colour-selector');
+  wrap.innerHTML = Object.entries(PF_VARIANTS).map(([key,v])=>
+    `<button class="colour-swatch-btn ${pfState.colourKey===key?'active':''}" onclick="selectPfColour('${key}')" aria-label="${v.label}">
+       <span class="dot" style="background:${v.hex}"></span>
+       <span class="label">${v.label}</span>
+     </button>`
+  ).join('');
+  document.getElementById('pf-colour-label').textContent = PF_VARIANTS[pfState.colourKey].label;
+}
+function selectPfColour(key){
+  pfState.colourKey = key;
+  pfState.imgIndex = 0;
+  renderPfColourSelector();
+  renderPfGallery();
+}
+function renderPfSizes(){
+  buildSizeGrid(document.getElementById('pf-size-grid'), pfState.size, (sz)=>{
+    pfState.size = sz;
+    document.getElementById('pf-size-error').style.display = 'none';
+    renderPfSizes();
+  });
+}
+renderPfColourSelector();
+renderPfGallery();
+renderPfSizes();
+
+/* =========================================================
+   QUANTITY
+========================================================= */
+function changeQty(scope, delta){
+  const state = scope === 'pf' ? pfState : vmState;
+  state.qty = Math.max(1, state.qty + delta);
+  document.getElementById(scope+'-qty').textContent = state.qty;
+}
+
+/* =========================================================
+   MODAL OPEN/CLOSE
+========================================================= */
+function openModal(id){ document.getElementById(id).classList.add('open'); document.body.style.overflow='hidden'; }
+function closeModal(id){
+  document.getElementById(id).classList.remove('open');
+  document.body.style.overflow='';
+  if(id==='order-modal'){
+    document.getElementById('order-form-wrap').style.display='';
+    document.getElementById('order-success').style.display='none';
+  }
+}
+function openSizeGuide(){ openModal('size-guide-modal'); }
+
+/* =========================================================
+   CART
+========================================================= */
+function addToCart(scope){
+  let item;
+  if(scope==='pf'){
+    if(!pfState.size){ document.getElementById('pf-size-error').style.display='block'; toast('Please select a size'); return; }
+    item = {
+      id:'pf-'+pfState.colourKey+'-'+pfState.size+'-'+Date.now(),
+      name:'Progress Flame Oversized T-Shirt', colour:PF_VARIANTS[pfState.colourKey].label,
+      size:pfState.size, qty:pfState.qty, price:599, img:PF_VARIANTS[pfState.colourKey].front
+    };
+  } else {
+    if(!vmState.size){ document.getElementById('vm-size-error').style.display='block'; toast('Please select a size'); return; }
+    const c = ACID_COLOURS.find(x=>x.key===vmState.colourKey);
+    item = {
+      id:'acid-'+vmState.colourKey+'-'+vmState.size+'-'+Date.now(),
+      name:'Acid Wash Oversized T-Shirt', colour:c.label,
+      size:vmState.size, qty:vmState.qty, price:599, img:c.img
+    };
+  }
+  cart.push(item);
+  renderCart();
+  toast('Added to cart');
+  if(scope==='vm') closeModal('view-modal');
+}
+
+function buyNow(scope){
+  addToCartSilently: {}
+  const before = cart.length;
+  addToCart(scope);
+  if(cart.length > before){ openCart(); }
+}
+
+function removeFromCart(id){
+  cart = cart.filter(i=>i.id!==id);
+  renderCart();
+}
+
+function renderCart(){
+  const wrap = document.getElementById('cart-items');
+  document.getElementById('cart-count').textContent = cart.reduce((a,i)=>a+i.qty,0);
+  if(cart.length===0){
+    wrap.innerHTML = '<div class="cart-empty">Your cart is empty.<br>Start adding some premium tees.</div>';
+    document.getElementById('cart-total').textContent = fmt(0);
+    return;
+  }
+  wrap.innerHTML = cart.map(i=>`
+    <div class="cart-item">
+      <img src="${i.img}" alt="${i.name}">
+      <div class="cart-item-info">
+        <div class="cn">${i.name}</div>
+        <div class="cm">${i.colour} &bull; ${i.size} &bull; Qty ${i.qty}</div>
+        <div class="cp">${fmt(i.price * i.qty)}</div>
+        <div class="cart-remove" onclick="removeFromCart('${i.id}')">Remove</div>
+      </div>
+    </div>
+  `).join('');
+  const total = cart.reduce((a,i)=>a+i.price*i.qty,0);
+  document.getElementById('cart-total').textContent = fmt(total);
+}
+renderCart();
+
+function openCart(){ document.getElementById('cart-overlay').classList.add('open'); document.getElementById('cart-drawer').classList.add('open'); document.body.style.overflow='hidden';}
+function closeCart(){ document.getElementById('cart-overlay').classList.remove('open'); document.getElementById('cart-drawer').classList.remove('open'); document.body.style.overflow='';}
+
+function checkoutWhatsApp(){
+  if(cart.length===0){ toast('Your cart is empty'); return; }
+  let msg = "Hi, I would like to order:%0A%0A";
+  cart.forEach(i=>{
+    msg += `${i.name}%0AColour: ${i.colour}%0ASize: ${i.size}%0AQuantity: ${i.qty}%0APrice: ${fmt(i.price*i.qty)}%0A%0A`;
+  });
+  const total = cart.reduce((a,i)=>a+i.price*i.qty,0);
+  msg += `Total: ${fmt(total)}%0A%0AName:%0APhone:%0ADelivery Address:`;
+  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`, '_blank');
+}
+document.getElementById('footer-whatsapp').onclick = (e)=>{ e.preventDefault(); window.open(`https://wa.me/${WHATSAPP_NUMBER}`, '_blank'); };
+
+/* =========================================================
+   ORDER FORM (Acid Wash "Order Now")
+========================================================= */
+function openOrderForm(scope){
+  if(scope==='vm'){
+    if(!vmState.size){ document.getElementById('vm-size-error').style.display='block'; toast('Please select a size'); return; }
+    const c = ACID_COLOURS.find(x=>x.key===vmState.colourKey);
+    pendingOrder = { name:'Acid Wash Oversized T-Shirt', colour:c.label, size:vmState.size, qty:vmState.qty, price:599, img:c.img };
+  }
+  document.getElementById('order-summary').innerHTML = `
+    <div><strong>${pendingOrder.name}</strong></div>
+    <div>Colour: ${pendingOrder.colour}</div>
+    <div>Size: ${pendingOrder.size}</div>
+    <div>Quantity: ${pendingOrder.qty}</div>
+    <div class="total">Total: ${fmt(pendingOrder.price * pendingOrder.qty)}</div>
+  `;
+  closeModal('view-modal');
+  openModal('order-modal');
+}
+
+function confirmOrder(){
+  const name = document.getElementById('of-name').value.trim();
+  const phone = document.getElementById('of-phone').value.trim();
+  const address = document.getElementById('of-address').value.trim();
+  if(!name || !phone || !address){ toast('Please fill in all fields'); return; }
+
+  const msg = `Hi, I would like to order the ${pendingOrder.name}.%0A%0AColour: ${pendingOrder.colour}%0ASize: ${pendingOrder.size}%0AQuantity: ${pendingOrder.qty}%0APrice: ${fmt(pendingOrder.price*pendingOrder.qty)}%0A%0AName: ${encodeURIComponent(name)}%0APhone: ${encodeURIComponent(phone)}%0ADelivery Address: ${encodeURIComponent(address)}`;
+  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`, '_blank');
+
+  document.getElementById('order-form-wrap').style.display='none';
+  document.getElementById('order-success').style.display='block';
+}
+
+/* =========================================================
+   CLOSE MODALS ON OUTSIDE CLICK
+========================================================= */
+document.querySelectorAll('.overlay').forEach(ov=>{
+  ov.addEventListener('click', (e)=>{ if(e.target === ov) closeModal(ov.id); });
+});
+</script>
+</body>
+</html>
