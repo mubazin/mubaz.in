@@ -13,6 +13,16 @@
 const crypto = require('crypto');
 
 module.exports = async (req, res) => {
+  // CORS headers
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+  // Handle preflight
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
     return res.status(405).json({ verified: false, error: 'Method not allowed' });
@@ -38,7 +48,7 @@ module.exports = async (req, res) => {
       .digest('hex');
 
     const expectedBuf = Buffer.from(expectedSignature, 'utf8');
-    const givenBuf = Buffer.from(String(razorpay_signature), 'utf8');
+    const givenBuf    = Buffer.from(String(razorpay_signature), 'utf8');
 
     const isValid =
       expectedBuf.length === givenBuf.length &&
@@ -53,7 +63,7 @@ module.exports = async (req, res) => {
     // the payment may be treated as successfully completed.
     return res.status(200).json({
       verified: true,
-      orderId: razorpay_order_id,
+      orderId:   razorpay_order_id,
       paymentId: razorpay_payment_id,
     });
   } catch (err) {

@@ -14,6 +14,16 @@
 const Razorpay = require('razorpay');
 
 module.exports = async (req, res) => {
+  // CORS headers — allow your own domain in production
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+  // Handle preflight
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
     return res.status(405).json({ error: 'Method not allowed' });
@@ -28,6 +38,7 @@ module.exports = async (req, res) => {
       return res.status(500).json({ error: 'Payment gateway is not configured on the server.' });
     }
 
+    // Vercel serverless functions parse the body automatically when Content-Type is application/json
     const body = typeof req.body === 'string' ? JSON.parse(req.body || '{}') : (req.body || {});
     const { amount, currency, receipt, notes } = body;
 
@@ -49,7 +60,7 @@ module.exports = async (req, res) => {
       orderId: order.id,
       amount: order.amount,
       currency: order.currency,
-      keyId,
+      keyId,                    // public key — safe to send to browser
     });
   } catch (err) {
     console.error('create-order error:', err);

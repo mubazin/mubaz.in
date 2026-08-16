@@ -1,0 +1,9 @@
+{
+  "name": "mubaz-in",
+  "version": "1.0.0",
+  "private": true,
+  "description": "MUBAZ.IN — static storefront with Vercel serverless functions for Razorpay payments.",
+  "dependencies": {
+    "razorpay": "^2.9.4"
+  }
+}

@@ -1249,8 +1249,27 @@ async function createRazorpayOrder(amountRupees, receipt, notes){
       notes
     })
   });
-  const data = await res.json();
-  if(!res.ok){ throw new Error(data.error || 'Failed to create order'); }
+
+  // Safe JSON parse: if the server returns an HTML error page (e.g. 404),
+  // res.json() would throw a SyntaxError. We catch that and surface a
+  // clear message instead of a cryptic parse error in the console.
+  let data;
+  try {
+    data = await res.json();
+  } catch (parseErr) {
+    throw new Error(
+      `Server returned a non-JSON response (HTTP ${res.status}). ` +
+      `Check that /api/create-order is deployed correctly.`
+    );
+  }
+
+  if (!res.ok) {
+    throw new Error(data.error || `Order creation failed (HTTP ${res.status})`);
+  }
+  // Validate the response contains a real Razorpay order ID
+  if (!data.orderId) {
+    throw new Error('Server response missing orderId — check server logs.');
+  }
   return data;
 }
 
@@ -1260,7 +1279,11 @@ async function verifyRazorpayPayment(payload){
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload)
   });
-  return res.json();
+  try {
+    return await res.json();
+  } catch (parseErr) {
+    return { verified: false, error: `Verification returned non-JSON (HTTP ${res.status})` };
+  }
 }
 
 function showPaymentSuccess(detailHtml){
