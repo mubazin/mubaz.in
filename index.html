@@ -332,6 +332,47 @@
 
   .visually-hidden{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0);}
   :focus-visible{ outline:2px solid var(--purple-bright); outline-offset:2px; }
+
+  /* ---------------- FLOATING WHATSAPP BUTTON ---------------- */
+  .whatsapp-float{
+    position:fixed;
+    right:24px;
+    bottom:24px;
+    z-index:1200;
+    width:58px;
+    height:58px;
+    border-radius:50%;
+    background:#25D366;
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow:0 10px 26px -8px rgba(37,211,102,0.65), 0 2px 8px rgba(0,0,0,0.18);
+    transition:transform .25s ease, box-shadow .25s ease, background .25s ease;
+    animation:wa-pulse 2.8s ease-in-out infinite;
+  }
+  .whatsapp-float:hover{
+    transform:translateY(-4px) scale(1.06);
+    background:#1ebe5a;
+    box-shadow:0 16px 32px -8px rgba(37,211,102,0.75), 0 4px 10px rgba(0,0,0,0.22);
+    animation-play-state:paused;
+  }
+  .whatsapp-float:active{ transform:translateY(-1px) scale(0.98); }
+  @keyframes wa-pulse{
+    0%, 100%{ box-shadow:0 10px 26px -8px rgba(37,211,102,0.65), 0 0 0 0 rgba(37,211,102,0.35); }
+    50%{ box-shadow:0 10px 26px -8px rgba(37,211,102,0.65), 0 0 0 10px rgba(37,211,102,0); }
+  }
+  @media(max-width:640px){
+    .whatsapp-float{ width:52px; height:52px; right:16px; bottom:16px; }
+    .whatsapp-float svg{ width:26px; height:26px; }
+  }
+  /* keep clear of the sticky mobile cart/checkout area if present */
+  @media(max-width:640px){
+    #cart-drawer.open ~ .whatsapp-float{ display:none; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .whatsapp-float{ animation:none; }
+  }
 </style>
 </head>
 <body>
@@ -724,12 +765,30 @@
 
 <div id="toast"></div>
 
+<!-- ================= FLOATING WHATSAPP BUTTON ================= -->
+<a id="whatsapp-float" class="whatsapp-float" href="#" target="_blank" rel="noopener noreferrer" aria-label="Chat with us on WhatsApp">
+  <svg viewBox="0 0 32 32" width="30" height="30" fill="currentColor" aria-hidden="true">
+    <path d="M16.004 3C9.376 3 4 8.373 4 15c0 2.34.66 4.523 1.804 6.383L4 29l7.79-1.77A11.93 11.93 0 0 0 16.004 27C22.63 27 28 21.627 28 15S22.63 3 16.004 3Zm0 21.7c-1.98 0-3.87-.53-5.51-1.53l-.395-.235-4.62 1.05 1.02-4.51-.258-.41A9.63 9.63 0 0 1 6.3 15c0-5.354 4.36-9.7 9.704-9.7 5.345 0 9.696 4.346 9.696 9.7 0 5.354-4.35 9.7-9.696 9.7Zm5.32-7.267c-.29-.146-1.717-.848-1.983-.945-.266-.098-.46-.146-.653.146-.194.293-.75.945-.92 1.14-.17.194-.34.22-.63.073-.29-.146-1.224-.451-2.332-1.437-.862-.768-1.444-1.717-1.613-2.01-.17-.293-.018-.451.128-.597.132-.13.29-.34.435-.51.146-.17.194-.293.29-.488.098-.194.049-.365-.024-.512-.073-.146-.653-1.573-.895-2.155-.236-.567-.476-.49-.653-.5l-.556-.01c-.194 0-.51.073-.777.365-.266.293-1.017.994-1.017 2.423 0 1.43 1.04 2.812 1.185 3.006.146.194 2.048 3.128 4.964 4.386.694.3 1.235.478 1.657.612.696.221 1.33.19 1.83.115.558-.083 1.717-.702 1.96-1.38.243-.677.243-1.257.17-1.38-.073-.122-.266-.194-.556-.34Z"/>
+  </svg>
+</a>
+
 <script>
 /* =========================================================
    CONFIG
 ========================================================= */
 // TODO: Replace with the real MUBAZ.IN WhatsApp business number (country code + number, no + or spaces)
-const WHATSAPP_NUMBER = "919999999999";
+/* =========================================================
+   SITE CONFIG — single source of truth
+   To change the WhatsApp number or default message later,
+   edit ONLY the two values below. Every WhatsApp link on the
+   site (floating button, cart checkout, order form, footer)
+   reads from here — nothing else needs to be touched.
+========================================================= */
+const SITE_CONFIG = {
+  whatsappNumber: "919489453728", // country code + number, no + no spaces
+  whatsappDefaultMessage: "Hi, I would like to buy your product. how can place the order."
+};
+const WHATSAPP_NUMBER = SITE_CONFIG.whatsappNumber;
 
 const SIZES = ["XS","S","M","L","XL","XXL","XXXL"];
 
@@ -1132,6 +1191,18 @@ function confirmOrder(){
 /* =========================================================
    CLOSE MODALS ON OUTSIDE CLICK
 ========================================================= */
+/* =========================================================
+   FLOATING WHATSAPP BUTTON
+   Reads number + message from SITE_CONFIG only — nothing
+   hardcoded here.
+========================================================= */
+(function initWhatsAppFloat(){
+  const btn = document.getElementById('whatsapp-float');
+  if(!btn) return;
+  const url = `https://wa.me/${SITE_CONFIG.whatsappNumber}?text=${encodeURIComponent(SITE_CONFIG.whatsappDefaultMessage)}`;
+  btn.setAttribute('href', url);
+})();
+
 document.querySelectorAll('.overlay').forEach(ov=>{
   ov.addEventListener('click', (e)=>{ if(e.target === ov) closeModal(ov.id); });
 });
